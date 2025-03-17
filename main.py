@@ -125,9 +125,9 @@ async def login(redirect_to: str = '/') -> Optional[RedirectResponse]:
 
     with ui.card().classes('absolute-center'):
         username = ui.input(
-            'Username', validation=lambda value: "用户名应为3-20字符" if not length_validator(username.value, 3, 20) else None)
+            'Username', validation=lambda value: "用户名应为3-20字符" if not length_validator(value, 3, 20) else None)
         password = ui.input('Password', password=True,
-                            password_toggle_button=True, validation=lambda value: "密码应为6-20字符" if not length_validator(password.value, 3, 20) else None)
+                            password_toggle_button=True, validation=lambda value: "密码应为6-20字符" if not length_validator(value, 3, 20) else None)
         with ui.row():
             ui.button('登录', on_click=try_login)
             ui.button("注册", on_click=try_register)
