@@ -77,6 +77,7 @@ async def get_current_user() -> User | None:
 # 配置登录中间件
 unrestricted_page_routes = ['/login', '/']
 
+
 class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         if not app.storage.user.get('authenticated', False):
@@ -123,15 +124,16 @@ async def login(redirect_to: str = '/') -> Optional[RedirectResponse]:
         return RedirectResponse('/')
 
     with ui.card().classes('absolute-center'):
-        username = ui.input('Username', validation=lambda value: "用户名应为3-20字符" if not length_validator(username.value, 3, 20) else None)
-        password=ui.input('Password', password=True,
+        username = ui.input(
+            'Username', validation=lambda value: "用户名应为3-20字符" if not length_validator(username.value, 3, 20) else None)
+        password = ui.input('Password', password=True,
                             password_toggle_button=True, validation=lambda value: "密码应为6-20字符" if not length_validator(password.value, 3, 20) else None)
         with ui.row():
             ui.button('登录', on_click=try_login)
             ui.button("注册", on_click=try_register)
 
 
-@ ui.page("/")
+@ui.page("/")
 async def home():
     def logout():
         app.storage.user.update({'authenticated': False})
@@ -148,9 +150,9 @@ async def home():
 # 创建接口
 
 
-@ app.get("/info")
+@app.get("/info")
 async def info():
-    user=await get_current_user()
+    user = await get_current_user()
     return JSONResponse({'id': user.id, 'username': user.username, 'create_at': user.created_date.strftime("%Y-%m-%d %H:%M:%S")})
 
 if __name__ in {"__main__", "__mp_main__"}:
