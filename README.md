@@ -2,13 +2,13 @@
 
 ### 本地运行
 ```
-poetry install --no-root
+poetry install
 poetry run python main.py
 ```
 
 ### Docker运行
 ```
-docker build -t nicegui-demo ./
+docker build --target production -t nicegui-demo .
 docker run -p 8080:8080 -v ./data:/app/data nicegui-demo
 ```
 
